@@ -1,25 +1,25 @@
+package main;
+
 import java.io.PrintWriter;
 
 public class RemovableDigitNumber {
 
 	int originalNumber;
-	String maxDivisibleBySixWithLeadingZeros;
 	
 	public RemovableDigitNumber(int number) {
 		this.originalNumber = number;
 	}
 
 	public void printSolution(PrintWriter out) {
-		solve();
-		out.println(maxDivisibleBySixWithLeadingZeros);
+		out.println(solve());
 	}
 
-	private void solve() {
+	public String solve() {
 		if(originalNumber % 2 == 1) {
 			if (originalNumber/10 % 3 == 0 && originalNumber/10 % 2 == 0) {
-				maxDivisibleBySixWithLeadingZeros = String.valueOf(originalNumber/10);
+				return String.valueOf(originalNumber/10);
 			} else {
-				maxDivisibleBySixWithLeadingZeros = "-1";
+				return "-1";
 			}
 		} else {
 			char[] removable;
@@ -29,31 +29,30 @@ public class RemovableDigitNumber {
 				removable[0] = '9';
 				removable[1] = '6';
 				removable[2] = '3';
-				removable[3] = '0';
-				remove(removable, String.valueOf(originalNumber));
+				removable[3] = '0';				
 				break;
 			case 1:
 				removable = new char[3];
 				removable[0] = '7';
 				removable[1] = '4';
-				removable[2] = '1';
-				remove(removable, String.valueOf(originalNumber));
+				removable[2] = '1';				
 				break;
 			case 2:
 				removable = new char[3];
 				removable[0] = '8';
 				removable[1] = '5';
 				removable[2] = '2';
-				remove(removable, String.valueOf(originalNumber));
 				break;
 			default:
-				//Never reached!
+				//Never reached! Used for compile reasons only
+				removable = new char[1];				
 				break;
 			}	
+			return remove(removable, String.valueOf(originalNumber));
 		}
 	}
 	
-	private void remove(char[] removable, String number) {
+	private String remove(char[] removable, String number) {
 		int removeAtIndex = -1;
 		for(int i = 0; i < number.length(); i++) {
 			if(isRemovable(number.charAt(i),removable)) {				
@@ -69,7 +68,7 @@ public class RemovableDigitNumber {
 				}
 			}
 		}
-		maxDivisibleBySixWithLeadingZeros = removeAt(number, removeAtIndex);
+		return removeAt(number, removeAtIndex);
 	}
 
 	private boolean isRemovable(char charAt, char[] removable) {
