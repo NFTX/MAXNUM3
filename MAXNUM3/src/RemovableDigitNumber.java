@@ -56,10 +56,12 @@ public class RemovableDigitNumber {
 	private void remove(char[] removable, String number) {
 		int removeAtIndex = -1;
 		for(int i = 0; i < number.length(); i++) {
-			if(isRemovable(number.charAt(i),removable)) {
-				//I can't remove the last one unless the previous one is pair
-				if(i != number.length()-1
-						|| Integer.parseInt(number.substring(i)) % 2 == 1) { 
+			if(isRemovable(number.charAt(i),removable)) {				
+				if(i == number.length()-1
+						&& Integer.parseInt(number.substring(i)) % 2 == 0
+						&& Integer.parseInt(number.substring(i-1,i)) % 2 == 1) {
+					//I can't remove the last one unless the previous one is pair
+				} else {
 					removeAtIndex = i;
 					if(i+1 < number.length() && number.charAt(i) < number.charAt(i+1)) {
 						break;
