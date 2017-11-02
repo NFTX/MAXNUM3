@@ -4,9 +4,9 @@ import java.io.PrintWriter;
 
 public class RemovableDigitNumber {
 
-	int originalNumber;
+	String originalNumber;
 	
-	public RemovableDigitNumber(int number) {
+	public RemovableDigitNumber(String number) {
 		this.originalNumber = number;
 	}
 
@@ -15,15 +15,17 @@ public class RemovableDigitNumber {
 	}
 
 	public String solve() {
-		if(originalNumber % 2 == 1) {
-			if (originalNumber/10 % 3 == 0 && originalNumber/10 % 2 == 0) {
-				return String.valueOf(originalNumber/10);
+		if(!isDivisibleByTwo(originalNumber)) {
+			String originalNumberBy10 = originalNumber.substring(0, originalNumber.length()-1); 
+			if (isDivisibleByTwo(originalNumberBy10)
+					&& isDivisibleByThree(originalNumberBy10)) {
+				return originalNumberBy10;
 			} else {
 				return "-1";
 			}
 		} else {
 			char[] removable;
-			switch (originalNumber % 3) { //A number is divisible by 3 if the sum of its digits is divisible by 3
+			switch (restByThree(originalNumber)) {
 			case 0: 
 				removable = new char[4];
 				removable[0] = '9';
@@ -48,7 +50,7 @@ public class RemovableDigitNumber {
 				removable = new char[1];				
 				break;
 			}	
-			return remove(removable, String.valueOf(originalNumber));
+			return remove(removable, originalNumber);
 		}
 	}
 	
@@ -82,5 +84,27 @@ public class RemovableDigitNumber {
 	
 	private String removeAt(String s, int index) {
 		return index == -1 ? "-1" : s.substring(0,index) + s.substring(index+1);
+	}
+	
+	private boolean isDivisibleByTwo(String number) {
+		int lastDigit = number.charAt(number.length()-1);
+		return lastDigit % 2 == 0; 
+	}
+
+	 //A number is divisible by 3 if the sum of its digits is divisible by 3
+	private boolean isDivisibleByThree(String number) {
+		int digitsSum = 0;
+		for (int i = 0; i < number.length(); i++) {
+			digitsSum +=  number.charAt(i);
+		}
+		return digitsSum % 3 == 0;
+	}
+	
+	private int restByThree(String number) {
+		int digitsSum = 0;
+		for (int i = 0; i < number.length(); i++) {
+			digitsSum +=  number.charAt(i);
+		}
+		return digitsSum % 3;
 	}
 }

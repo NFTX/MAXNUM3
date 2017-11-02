@@ -10,16 +10,16 @@ class RemovableDigitNumberTest {
 
 	@Test
 	void testSolve() {
-		assertTrue(randomNumbersTest(3000));
+		assertTrue(randomNumbersInt32SizeTest(300000));
 	}
 
-	private boolean randomNumbersTest(int quantity) {
+	private boolean randomNumbersInt32SizeTest(int quantity) {
 		boolean passed = true;
 		for (int i = 0; i < quantity; i++) {
-			int number = (int)(10 + Math.random() * 1000000000);
+			int number = (int)(10 + Math.random() * 2147483637);
 			String numberString= String.valueOf(number);
 			int max = -1;
-			RemovableDigitNumber test = new RemovableDigitNumber(number);
+			RemovableDigitNumber test = new RemovableDigitNumber(numberString);
 			String result = test.solve();
 			if(result.isEmpty()) {
 				System.out.println(numberString + " -> empty string!");

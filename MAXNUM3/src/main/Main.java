@@ -26,8 +26,7 @@ public class Main {
             br = new BufferedReader(new InputStreamReader(System.in));            
             int T = Integer.parseInt(br.readLine());
             for(int i = 0; i < T; i++) {
-            	int number = Integer.parseInt(br.readLine());
-            	result.add(new RemovableDigitNumber(number));
+            	result.add(new RemovableDigitNumber(br.readLine()));
             }
         } catch (IOException e) {
 			e.printStackTrace();
