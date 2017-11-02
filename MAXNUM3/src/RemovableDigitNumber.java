@@ -1,5 +1,4 @@
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 public class RemovableDigitNumber {
 
@@ -55,46 +54,25 @@ public class RemovableDigitNumber {
 	}
 	
 	private void remove(char[] removable, String number) {
-		int[] occurrence = new int[removable.length*2];
-		int aux;
 		int removeAtIndex = -1;
-		for(int i = 0; i < removable.length; i++) {
-			aux = number.indexOf(removable[i]);
-			occurrence[2*i] = aux;
-			occurrence[2*i+1] = number.substring(aux+1).indexOf(removable[i]);			
-		}
-		Arrays.sort(occurrence);
-		
-		int first = indexOfMin(occurrence,1);
-		if(first != -1) {
-			if(first == number.length()-1) {
-				removeAtIndex = number.length()-1;
-			} else if(number.charAt(first) <= number.charAt(first+1)) {
-				removeAtIndex = first;
-			} else {
-				int second = indexOfMin(occurrence,2);
-				if(second == -1) {
-					removeAtIndex = first;
-				} else if(number.charAt(first+1) > number.charAt(second)) {
-					removeAtIndex = first;
-				} else {
-					removeAtIndex = second;
+		for(int i = 0; i < number.length(); i++) {
+			if(isRemovable(number.charAt(i),removable)) {
+				removeAtIndex = i;
+				if(i+1 < number.length() && number.charAt(i) < number.charAt(i+1)) {
+					break;
 				}
 			}
 		}
 		maxDivisibleBySixWithLeadingZeros = removeAt(number, removeAtIndex);
 	}
 
-	private int indexOfMin(int[] list, int ordinal) {
-		int i = 0;
-		while(i < list.length) {
-			if(list[i] == -1) {
-				i++; 
-			} else {
-				break;
+	private boolean isRemovable(char charAt, char[] removable) {
+		for (int i = 0; i < removable.length; i++) {
+			if(charAt == removable[i]) {
+				return true;
 			}
 		}
-		return list.length <= i+ordinal-1 ? -1 : list[i+ordinal-1];
+		return false;
 	}
 	
 	private String removeAt(String s, int index) {
