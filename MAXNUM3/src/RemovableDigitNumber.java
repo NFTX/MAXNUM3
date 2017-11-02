@@ -57,9 +57,13 @@ public class RemovableDigitNumber {
 		int removeAtIndex = -1;
 		for(int i = 0; i < number.length(); i++) {
 			if(isRemovable(number.charAt(i),removable)) {
-				removeAtIndex = i;
-				if(i+1 < number.length() && number.charAt(i) < number.charAt(i+1)) {
-					break;
+				//I can't remove the last one unless the previous one is pair
+				if(i != number.length()-1
+						|| Integer.parseInt(number.substring(i)) % 2 == 1) { 
+					removeAtIndex = i;
+					if(i+1 < number.length() && number.charAt(i) < number.charAt(i+1)) {
+						break;
+					}
 				}
 			}
 		}
